@@ -3,8 +3,12 @@
 import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
+import dotenv from "dotenv";
 
-const PORT = 3000;
+dotenv.config();
+
+// const PORT = 3000;
+const PORT = Number(process.env.PORT);
 
 export const startServer = () => {
     const app = express();
