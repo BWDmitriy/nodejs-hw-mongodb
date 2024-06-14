@@ -27,7 +27,7 @@ export const setupServer = () => {
 
     app.get('/', (req, res) => {
         res.json({
-            message: 'Hello world!',
+            message: 'Hello world! This index page belongs to hw2-mongodb branch',
         });
     });
 
