@@ -5,7 +5,8 @@ import pino from 'pino-http';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import {
-    getContacts
+    getContacts,
+    getContact
 } from './controllers/contactsController.js';
 
 dotenv.config();
@@ -32,6 +33,9 @@ export const setupServer = () => {
 
     // Реєстрація роута GET /contacts
     app.get('/contacts', getContacts);
+
+    // Реєстрація роута GET /contacts/:contactId
+    app.get('/contacts/:contactId', getContact);
 
     app.use('*', (req, res, next) => {
         res.status(404).json({
