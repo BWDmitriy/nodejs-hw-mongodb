@@ -3,19 +3,13 @@
 import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
-import dotenv from "dotenv";
-
-import {
-    env
-} from './utils/env';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
-// const PORT = 3000;
-// const PORT = Number(process.env.PORT);
-const PORT = Number(env('PORT', '3000'));
+const PORT = process.env.PORT || 3000;
 
-export const startServer = () => {
+export const setupServer = () => {
     const app = express();
 
     app.use(express.json());
@@ -25,7 +19,7 @@ export const startServer = () => {
         transport: {
             target: 'pino-pretty',
         },
-    }, ));
+    }));
 
     app.get('/', (req, res) => {
         res.json({
@@ -49,5 +43,4 @@ export const startServer = () => {
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
     });
-
 };

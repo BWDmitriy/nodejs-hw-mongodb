@@ -1,15 +1,15 @@
 // src/index.js
 
 import {
-    initMongoDB
-} from "./db/initMongoDB";
+    initMongoConnection
+} from './db/initMongoConnection.js';
 import {
-    startServer
-} from "./server";
+    setupServer
+} from './server.js';
 
 const bootstrap = async () => {
-    await initMongoDB();
-    startServer();
+    await initMongoConnection();
+    setupServer();
 };
 
 bootstrap();
