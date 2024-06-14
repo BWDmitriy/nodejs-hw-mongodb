@@ -2,7 +2,7 @@
 
 import {
     getAllContacts
-} from "../services/contacts";
+} from '../services/contacts.js';
 
 export const getContacts = async (req, res, next) => {
     try {

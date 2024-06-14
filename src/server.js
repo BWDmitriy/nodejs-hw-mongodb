@@ -6,7 +6,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import {
     getContacts
-} from './controllers/contactsController';
+} from './controllers/contactsController.js';
 
 dotenv.config();
 
