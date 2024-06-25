@@ -5,7 +5,8 @@ import {
 } from 'express';
 import {
     getContacts,
-    getContact
+    getContact,
+    createContact
 } from '../controllers/contactsController.js';
 import {
     ctrlWrapper
@@ -15,5 +16,6 @@ const router = Router();
 
 router.get('/contacts', ctrlWrapper(getContacts));
 router.get('/contacts/:contactId', ctrlWrapper(getContact));
+router.post('/contacts', ctrlWrapper(createContact));
 
 export default router;
