@@ -27,8 +27,13 @@ export const getContact = async (req, res, next) => {
         const contact = await getContactById(contactId);
 
         if (!contact) {
-            next(createHttpError(404, 'Contact not found'));
-            return;
+            return next(createHttpError(404, {
+                status: 404,
+                message: 'Contact not found',
+                data: {
+                    message: 'Contact not found'
+                }
+            }));
         }
 
         res.json({

@@ -9,7 +9,9 @@ export const errorHandler = (err, req, res, next) => {
         res.status(err.status).json({
             status: err.status,
             message: 'Something went wrong',
-            data: err.message,
+            data: {
+                message: 'Something went wrong'
+            },
         });
         return;
     }
@@ -17,6 +19,8 @@ export const errorHandler = (err, req, res, next) => {
     res.status(500).json({
         status: 500,
         message: 'Something went wrong',
-        data: err.message,
+        data: {
+            message: 'Something went wrong'
+        },
     });
 };
