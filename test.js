@@ -16,6 +16,7 @@ import axios from "axios";
 //Get contact by sample id
 //node test.js
 
+// valid/invalid samples
 // axios.get('http://localhost:3000/api/contacts/666bf52764b73a53690bbd52')
 // axios.get('http://localhost:3000/api/contacts/667b2e4b76256fbb6936470d')
 //     .then(response => {
@@ -47,26 +48,26 @@ import axios from "axios";
 
 // Update contact by sample id
 
-// const contactId = '666bf52764b73a53690bbd52'; // Replace with a valid contact ID
-const contactId = '667b2e4b76256fbb6936470d'; // Replace with a valid contact ID
-const updateData = {
-    name: "Please Delete",
-    phoneNumber: "0987654321",
-    email: "jane.doe@example.com",
-    isFavourite: false,
-    contactType: "home"
-};
+// const contactId = '666bf52764b73a53690bbd52'; // Replace with valid contact ID
+// const contactId = '667b2e4b76256fbb6936470d'; // Replace with invalid contact ID
+// const updateData = {
+//     name: "Please Delete",
+//     phoneNumber: "0987654321",
+//     email: "jane.doe@example.com",
+//     isFavourite: false,
+//     contactType: "home"
+// };
 
-axios.patch(`http://localhost:3000/api/contacts/${contactId}`, updateData)
-    .then(response => {
-        console.log(response.data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+// axios.patch(`http://localhost:3000/api/contacts/${contactId}`, updateData)
+//     .then(response => {
+//         console.log(response.data);
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//     });
 
-// Delete contact by existing id
-// const contactId = '667b2e4b76256fbb6936470d';
+// Delete contact by existing/invalid id
+// const contactId = '667b2e4b76256fbb6936470d'; // invalid id
 
 // axios.delete(`http://localhost:3000/api/contacts/${contactId}`)
 //     .then(response => {
