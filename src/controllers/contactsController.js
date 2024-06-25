@@ -28,10 +28,8 @@ export const getContact = async (req, res, next) => {
         const contact = await getContactById(contactId);
 
         if (!contact) {
-            return res.status(404).json({
-                status: "error",
-                message: `Contact with id ${contactId} not found`,
-            });
+            next(createHttpError(404, 'Contact not found'));
+            return;
         }
 
         res.json({
