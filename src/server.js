@@ -41,7 +41,6 @@ export const setupServer = () => {
     });
   });
 
-  // Use the contacts router
   app.use('/api', router);
 
   app.use('*', notFoundHandler);
