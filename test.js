@@ -43,20 +43,21 @@ import axios from "axios";
 //         console.error('Error:', error);
 //     });
 
-// Update contact by sample id
-const contactId = '666bf52764b73a53690bbd52'; // Replace with a valid contact ID
-const updateData = {
-    name: "Test Toe",
-    phoneNumber: "0987654321",
-    email: "jane.doe@example.com",
-    isFavourite: false,
-    contactType: "home"
-};
 
-axios.patch(`http://localhost:3000/api/contacts/${contactId}`, updateData)
-    .then(response => {
-        console.log(response.data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+// Update contact by sample id
+// const contactId = '666bf52764b73a53690bbd52'; // Replace with a valid contact ID
+// const updateData = {
+//     name: "Jhane Joe",
+//     phoneNumber: "0987654321",
+//     email: "jane.doe@example.com",
+//     isFavourite: false,
+//     contactType: "home"
+// };
+
+// axios.patch(`http://localhost:3000/api/contacts/${contactId}`, updateData)
+//     .then(response => {
+//         console.log(response.data);
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//     });

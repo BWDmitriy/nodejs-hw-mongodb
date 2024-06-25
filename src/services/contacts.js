@@ -22,3 +22,7 @@ export const patchContact = async (id, contactData) => {
         new: true
     });
 };
+
+export const removeContact = async (id) => {
+    return await ContactsCollection.findByIdAndDelete(id);
+};
