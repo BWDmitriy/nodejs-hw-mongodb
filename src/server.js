@@ -4,10 +4,6 @@ import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import {
-  getContacts,
-  getContact
-} from './controllers/contactsController.js';
 import router from './routers/contacts.js';
 import {
   errorHandler
@@ -29,7 +25,6 @@ export const setupServer = () => {
 
   app.use(express.json({
     type: ['application/json', 'application/vnd.api+json']
-    // limit: '100kb'
   }));
 
   app.use(
@@ -46,32 +41,12 @@ export const setupServer = () => {
     });
   });
 
-  // Реєстрація роута GET /contacts
-  app.get('/contacts', getContacts);
-
-  // Реєстрація роута GET /contacts/:contactId
-  app.get('/contacts/:contactId', getContact);
-
-  app.use(router); // Додаємо роутер до app як middleware
-
-
+  // Use the contacts router
+  app.use('/api', router);
 
   app.use('*', notFoundHandler);
 
-  // app.use('*', (req, res, next) => {
-  //   res.status(404).json({
-  //     message: 'Not found',
-  //   });
-  // });
-
   app.use(errorHandler);
-
-  // app.use((err, req, res, next) => {
-  //   res.status(500).json({
-  //     message: 'Something went wrong',
-  //     error: err.message,
-  //   });
-  // });
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
