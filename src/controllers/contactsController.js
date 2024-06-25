@@ -4,6 +4,8 @@ import {
     getAllContacts,
     getContactById
 } from '../services/contacts.js';
+import createHttpError from 'http-errors';
+
 
 export const getContacts = async (req, res, next) => {
     try {
@@ -33,7 +35,7 @@ export const getContact = async (req, res, next) => {
         }
 
         res.json({
-            status: "success",
+            status: 200,
             message: `Successfully found contact with id ${contactId}!`,
             data: contact,
         });
