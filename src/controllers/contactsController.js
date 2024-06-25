@@ -71,7 +71,7 @@ export const updateContact = async (req, res, next) => {
         const contactData = req.body;
         const updatedContact = await patchContact(contactId, contactData);
 
-        if (!updateContact) {
+        if (!updatedContact) {
             return next(createHttpError(404, {
                 status: 404,
                 message: 'Contact not found',
