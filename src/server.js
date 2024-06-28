@@ -25,6 +25,8 @@ export const setupServer = () => {
     }),
   );
 
+  app.use(express.urlencoded({ extended: true }));
+
   app.use(
     pino({
       transport: {
