@@ -1,4 +1,4 @@
-// src/validation/students.js
+// src/validation/contacts.js
 
 import Joi from 'joi';
 
