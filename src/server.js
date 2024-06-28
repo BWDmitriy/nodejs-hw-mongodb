@@ -16,7 +16,7 @@ export const setupServer = () => {
   const app = express();
 
   app.use(express.json());
-
+  app.use(express.urlencoded({ extended: true }));
   app.use(cors());
 
   app.use(
@@ -24,8 +24,6 @@ export const setupServer = () => {
       type: ['application/json', 'application/vnd.api+json'],
     }),
   );
-
-  app.use(express.urlencoded({ extended: true }));
 
   app.use(
     pino({
