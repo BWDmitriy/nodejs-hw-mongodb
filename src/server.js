@@ -5,12 +5,8 @@ import pino from 'pino-http';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import router from './routers/contacts.js';
-import {
-  errorHandler
-} from './middlewares/errorHandler.js';
-import {
-  notFoundHandler
-} from './middlewares/notFoundHandler.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
 dotenv.config();
 
@@ -23,9 +19,11 @@ export const setupServer = () => {
 
   app.use(cors());
 
-  app.use(express.json({
-    type: ['application/json', 'application/vnd.api+json']
-  }));
+  app.use(
+    express.json({
+      type: ['application/json', 'application/vnd.api+json'],
+    }),
+  );
 
   app.use(
     pino({
@@ -37,7 +35,7 @@ export const setupServer = () => {
 
   app.get('/', (req, res) => {
     res.json({
-      message: 'Hello world! This index page belongs to hw3-crud branch',
+      message: 'Hello world! This index page belongs to hw4-validation branch',
     });
   });
 
