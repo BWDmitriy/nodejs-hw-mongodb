@@ -7,14 +7,26 @@ export const getAllContacts = async ({
   perPage = 10,
   sortBy = 'name',
   sortOrder = 'asc',
+  type,
+  isFavourite,
 }) => {
   const skip = (page - 1) * perPage;
   const sortOptions = { [sortBy]: sortOrder === 'asc' ? 1 : -1 };
-  const contacts = await ContactsCollection.find()
+  const filterOptions = {};
+
+  if (type) {
+    filterOptions.contactType = type;
+  }
+
+  if (isFavourite !== undefined) {
+    filterOptions.isFavourite = isFavourite === 'true';
+  }
+
+  const contacts = await ContactsCollection.find(filterOptions)
     .skip(skip)
     .limit(perPage)
     .sort(sortOptions);
-  const totalItems = await ContactsCollection.countDocuments();
+  const totalItems = await ContactsCollection.countDocuments(filterOptions);
   return { contacts, totalItems };
 };
 
