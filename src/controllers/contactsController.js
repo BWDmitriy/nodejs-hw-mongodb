@@ -16,12 +16,16 @@ export const getContacts = async (req, res, next) => {
       perPage = 10,
       sortBy = 'name',
       sortOrder = 'asc',
+      type,
+      isFavourite,
     } = req.query;
     const { contacts, totalItems } = await getAllContacts({
       page,
       perPage,
       sortBy,
       sortOrder,
+      type,
+      isFavourite,
     });
     const totalPages = Math.ceil(totalItems / perPage);
 
