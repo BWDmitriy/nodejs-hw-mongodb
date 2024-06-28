@@ -9,12 +9,20 @@ import {
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
 
-// src/controllers/contactsController.js
-
 export const getContacts = async (req, res, next) => {
   try {
-    const { page = 1, perPage = 10 } = req.query;
-    const { contacts, totalItems } = await getAllContacts({ page, perPage });
+    const {
+      page = 1,
+      perPage = 10,
+      sortBy = 'name',
+      sortOrder = 'asc',
+    } = req.query;
+    const { contacts, totalItems } = await getAllContacts({
+      page,
+      perPage,
+      sortBy,
+      sortOrder,
+    });
     const totalPages = Math.ceil(totalItems / perPage);
 
     res.json({
