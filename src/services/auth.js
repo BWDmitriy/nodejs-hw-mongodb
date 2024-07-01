@@ -40,8 +40,8 @@ export const loginUser = async (payload) => {
     userId: user._id,
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES), // 15 хвилин для access токену
-    refreshTokenValidUntil: new Date(Date.now() + ONE_DAY * 30), // 30 днів для refresh токену
+    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    refreshTokenValidUntil: new Date(Date.now() + ONE_DAY * 30),
   });
 };
 
