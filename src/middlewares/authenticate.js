@@ -2,8 +2,8 @@
 
 import createHttpError from 'http-errors';
 
-import { SessionsCollection } from '../db/models/session';
-import { UsersCollection } from '../db/models/user';
+import { SessionsCollection } from '../db/models/session.js';
+import { UsersCollection } from '../db/models/user.js';
 
 export const authenticate = async (req, res, next) => {
   const authHeader = req.get('Authorization');
@@ -21,9 +21,7 @@ export const authenticate = async (req, res, next) => {
     return;
   }
 
-  const session = await SessionsCollection.findOne({
-    accessToken: token,
-  });
+  const session = await SessionsCollection.findOne({ accessToken: token });
 
   if (!session) {
     next(createHttpError(401, 'Session not found'));
