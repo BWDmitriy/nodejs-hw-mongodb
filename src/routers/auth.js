@@ -14,7 +14,7 @@ import { authenticate } from '../middlewares/authenticate.js';
 
 const authRouter = Router();
 
-authRouter.use(authenticate);
+// authRouter.use(authenticate);
 
 authRouter.post(
   '/register',
@@ -28,8 +28,12 @@ authRouter.post(
   ctrlWrapper(loginUserController),
 );
 
-authRouter.post('/logout', ctrlWrapper(logoutUserController));
+authRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
 
-authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
+authRouter.post(
+  '/refresh',
+  authenticate,
+  ctrlWrapper(refreshUserSessionController),
+);
 
 export default authRouter;
