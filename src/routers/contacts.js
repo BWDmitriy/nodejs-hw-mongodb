@@ -11,21 +11,24 @@ import {
 } from '../controllers/contactsController';
 import { validateBody } from '../middlewares/validation';
 import { contactSchema } from '../validation/contact';
+import { authenticate } from '../middlewares/authenticate';
 
 const contactsRouter = Router();
 
-contactsRouter.get('/', ctrlWrapper(getContacts));
-contactsRouter.get('/:contactId', ctrlWrapper(getContact));
+contactsRouter.get('/', authenticate, ctrlWrapper(getContacts));
+contactsRouter.get('/:contactId', authenticate, ctrlWrapper(getContact));
 contactsRouter.post(
   '/',
+  authenticate,
   validateBody(contactSchema),
   ctrlWrapper(createContact),
 );
 contactsRouter.patch(
   '/:contactId',
+  authenticate,
   validateBody(contactSchema),
   ctrlWrapper(updateContact),
 );
-contactsRouter.delete('/:contactId', ctrlWrapper(deleteContact));
+contactsRouter.delete('/:contactId', authenticate, ctrlWrapper(deleteContact));
 
 export default contactsRouter;
