@@ -26,6 +26,7 @@ export const getContacts = async (req, res, next) => {
       sortOrder,
       type,
       isFavourite,
+      userId: req.user._id,
     });
     const totalPages = Math.ceil(totalItems / perPage);
 
@@ -50,7 +51,7 @@ export const getContacts = async (req, res, next) => {
 export const getContact = async (req, res, next) => {
   try {
     const { contactId } = req.params;
-    const contact = await getContactById(contactId);
+    const contact = await getContactById(contactId, req.user._id);
 
     if (!contact) {
       return next(
@@ -76,7 +77,7 @@ export const getContact = async (req, res, next) => {
 
 export const createContact = async (req, res, next) => {
   try {
-    const contactData = req.body;
+    const contactData = { ...req.body, userId: req.user._id };
     const newContact = await addContact(contactData);
 
     res.status(201).json({
@@ -93,7 +94,11 @@ export const updateContact = async (req, res, next) => {
   try {
     const { contactId } = req.params;
     const contactData = req.body;
-    const updatedContact = await patchContact(contactId, contactData);
+    const updatedContact = await patchContact(
+      contactId,
+      contactData,
+      req.user._id,
+    );
 
     if (!updatedContact) {
       return next(
@@ -120,7 +125,7 @@ export const updateContact = async (req, res, next) => {
 export const deleteContact = async (req, res, next) => {
   try {
     const { contactId } = req.params;
-    const deletedContact = await removeContact(contactId);
+    const deletedContact = await removeContact(contactId, req.user._id);
     if (!deletedContact) {
       return next(
         createHttpError(404, {
