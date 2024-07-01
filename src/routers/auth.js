@@ -14,8 +14,6 @@ import { authenticate } from '../middlewares/authenticate.js';
 
 const authRouter = Router();
 
-// authRouter.use(authenticate);
-
 authRouter.post(
   '/register',
   validateBody(registerUserSchema),
