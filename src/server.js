@@ -4,7 +4,7 @@ import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import router from './routers/contacts.js';
+import contactsRouter from './routers/contacts.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
@@ -39,7 +39,7 @@ export const setupServer = () => {
     });
   });
 
-  app.use('/api', router);
+  app.use('/api', contactsRouter);
 
   app.use('*', notFoundHandler);
 

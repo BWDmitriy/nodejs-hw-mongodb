@@ -15,20 +15,20 @@ import {
   updateContactSchema,
 } from '../validation/contacts.js';
 
-const router = Router();
+const contactsRouter = Router();
 
-router.get('/contacts', ctrlWrapper(getContacts));
-router.get('/contacts/:contactId', ctrlWrapper(getContact));
-router.post(
+contactsRouter.get('/contacts', ctrlWrapper(getContacts));
+contactsRouter.get('/contacts/:contactId', ctrlWrapper(getContact));
+contactsRouter.post(
   '/contacts',
   validateBody(createContactSchema),
   ctrlWrapper(createContact),
 );
-router.patch(
+contactsRouter.patch(
   '/contacts/:contactId',
   validateBody(updateContactSchema),
   ctrlWrapper(updateContact),
 );
-router.delete('/contacts/:contactId', ctrlWrapper(deleteContact));
+contactsRouter.delete('/contacts/:contactId', ctrlWrapper(deleteContact));
 
-export default router;
+export default contactsRouter;
