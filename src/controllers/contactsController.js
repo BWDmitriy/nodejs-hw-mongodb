@@ -81,7 +81,7 @@ export const createContact = async (req, res, next) => {
     const newContact = await addContact(contactData);
 
     res.status(201).json({
-      status: 'success',
+      status: 201,
       message: 'Successfully created a contact!',
       data: newContact,
     });
@@ -113,7 +113,7 @@ export const updateContact = async (req, res, next) => {
     }
 
     res.status(200).json({
-      status: 'success',
+      status: 200,
       message: 'Successfully patched a contact!',
       data: updatedContact,
     });
