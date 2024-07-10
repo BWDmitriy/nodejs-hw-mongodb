@@ -5,12 +5,8 @@ import pino from 'pino-http';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import router from './routers/contacts.js';
-import {
-  errorHandler
-} from './middlewares/errorHandler.js';
-import {
-  notFoundHandler
-} from './middlewares/notFoundHandler.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
 dotenv.config();
 
@@ -23,9 +19,11 @@ export const setupServer = () => {
 
   app.use(cors());
 
-  app.use(express.json({
-    type: ['application/json', 'application/vnd.api+json']
-  }));
+  app.use(
+    express.json({
+      type: ['application/json', 'application/vnd.api+json'],
+    }),
+  );
 
   app.use(
     pino({
@@ -41,7 +39,7 @@ export const setupServer = () => {
     });
   });
 
-  app.use('/api', router);
+  app.use('/', router);
 
   app.use('*', notFoundHandler);
 
