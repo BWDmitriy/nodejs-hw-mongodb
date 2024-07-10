@@ -39,7 +39,7 @@ export const setupServer = () => {
     });
   });
 
-  app.use('/api', router);
+  app.use('/', router);
 
   app.use('*', notFoundHandler);
 
