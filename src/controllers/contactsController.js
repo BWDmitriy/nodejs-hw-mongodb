@@ -8,18 +8,24 @@ import {
   removeContact,
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
+import {
+  isValidObjectId
+} from 'mongoose';
 
 export const getContacts = async (req, res, next) => {
   try {
     const {
       page = 1,
-      perPage = 10,
-      sortBy = 'name',
-      sortOrder = 'asc',
-      type,
-      isFavourite,
+        perPage = 10,
+        sortBy = 'name',
+        sortOrder = 'asc',
+        type,
+        isFavourite,
     } = req.query;
-    const { contacts, totalItems } = await getAllContacts({
+    const {
+      contacts,
+      totalItems
+    } = await getAllContacts({
       page,
       perPage,
       sortBy,
@@ -49,7 +55,22 @@ export const getContacts = async (req, res, next) => {
 
 export const getContact = async (req, res, next) => {
   try {
-    const { contactId } = req.params;
+    const {
+      contactId
+    } = req.params;
+
+    if (!isValidObjectId(contactId)) {
+      return next(
+        createHttpError(400, {
+          status: 400,
+          message: 'Invalid contact ID',
+          data: {
+            message: 'Invalid contact ID',
+          },
+        }),
+      );
+    }
+
     const contact = await getContactById(contactId);
 
     if (!contact) {
@@ -91,7 +112,22 @@ export const createContact = async (req, res, next) => {
 
 export const updateContact = async (req, res, next) => {
   try {
-    const { contactId } = req.params;
+    const {
+      contactId
+    } = req.params;
+
+    if (!isValidObjectId(contactId)) {
+      return next(
+        createHttpError(400, {
+          status: 400,
+          message: 'Invalid contact ID',
+          data: {
+            message: 'Invalid contact ID',
+          },
+        }),
+      );
+    }
+
     const contactData = req.body;
     const updatedContact = await patchContact(contactId, contactData);
 
@@ -119,7 +155,22 @@ export const updateContact = async (req, res, next) => {
 
 export const deleteContact = async (req, res, next) => {
   try {
-    const { contactId } = req.params;
+    const {
+      contactId
+    } = req.params;
+
+    if (!isValidObjectId(contactId)) {
+      return next(
+        createHttpError(400, {
+          status: 400,
+          message: 'Invalid contact ID',
+          data: {
+            message: 'Invalid contact ID',
+          },
+        }),
+      );
+    }
+
     const deletedContact = await removeContact(contactId);
     if (!deletedContact) {
       return next(
