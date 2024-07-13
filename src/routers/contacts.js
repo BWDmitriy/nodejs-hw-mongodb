@@ -13,7 +13,7 @@ import { validateBody } from '../middlewares/validation.js';
 import {
   createContactSchema,
   updateContactSchema,
-} from '../validation/contact.js';
+} from '../validation/contacts.js';
 import { authenticate } from '../middlewares/authenticate.js';
 
 const contactsRouter = Router();
