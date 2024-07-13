@@ -10,7 +10,6 @@ import {
   refreshUserSessionController,
 } from '../controllers/auth.js';
 import { validateBody } from '../middlewares/validation.js';
-import { authenticate } from '../middlewares/authenticate.js';
 
 const authRouter = Router();
 
@@ -26,12 +25,8 @@ authRouter.post(
   ctrlWrapper(loginUserController),
 );
 
-authRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
+authRouter.post('/logout', ctrlWrapper(logoutUserController));
 
-authRouter.post(
-  '/refresh',
-  authenticate,
-  ctrlWrapper(refreshUserSessionController),
-);
+authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
 
 export default authRouter;
