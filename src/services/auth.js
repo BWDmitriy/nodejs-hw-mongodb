@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 import { UsersCollection } from '../db/models/user.js';
 import createHttpError from 'http-errors';
-
 import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
 import { SessionsCollection } from '../db/models/session.js';
 
@@ -46,7 +45,19 @@ export const loginUser = async (payload) => {
 };
 
 export const logoutUser = async (sessionId) => {
-  await SessionsCollection.deleteOne({ _id: sessionId });
+  try {
+    const session = await SessionsCollection.findById(sessionId);
+
+    if (!session) {
+      return false; // Session not found
+    }
+
+    await SessionsCollection.findByIdAndDelete(sessionId);
+    return true; // Session deleted successfully
+  } catch (error) {
+    console.error('Error in logoutUser service:', error);
+    throw error;
+  }
 };
 
 const createSession = () => {
@@ -62,12 +73,20 @@ const createSession = () => {
 };
 
 export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
+  console.log(
+    'Refreshing session with sessionId:',
+    sessionId,
+    'and refreshToken:',
+    refreshToken,
+  );
+
   const session = await SessionsCollection.findOne({
     _id: sessionId,
     refreshToken,
   });
 
   if (!session) {
+    console.log('Session not found');
     throw createHttpError(401, 'Session not found');
   }
 
@@ -75,15 +94,21 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
     new Date() > new Date(session.refreshTokenValidUntil);
 
   if (isSessionTokenExpired) {
+    console.log('Session token expired');
     throw createHttpError(401, 'Session token expired');
   }
 
   const newSession = createSession();
 
+  // Invalidate the current session
   await SessionsCollection.deleteOne({ _id: sessionId, refreshToken });
 
-  return await SessionsCollection.create({
+  const createdSession = await SessionsCollection.create({
     userId: session.userId,
     ...newSession,
   });
+
+  console.log('New session created:', createdSession);
+
+  return createdSession;
 };

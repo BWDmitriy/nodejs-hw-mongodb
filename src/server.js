@@ -33,7 +33,7 @@ export const setupServer = () => {
       },
     }),
   );
-
+  app.use(cookieParser());
   app.get('/', (req, res) => {
     res.json({
       message: 'Hello world! This index page belongs to hw5-auth branch',
@@ -46,8 +46,6 @@ export const setupServer = () => {
   app.use('*', notFoundHandler);
 
   app.use(errorHandler);
-
-  app.use(cookieParser());
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
