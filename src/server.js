@@ -37,7 +37,7 @@ export const setupServer = () => {
 
   app.get('/', (req, res) => {
     res.json({
-      message: 'Hello world! This index page belongs to hw4-validation branch',
+      message: 'Hello world! This index page belongs to hw5-auth branch',
     });
   });
 
