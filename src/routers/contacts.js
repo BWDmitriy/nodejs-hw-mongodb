@@ -1,6 +1,7 @@
 // src/routers/contacts.js
 
 import { Router } from 'express';
+import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   getContacts,
   getContact,
@@ -8,27 +9,29 @@ import {
   updateContact,
   deleteContact,
 } from '../controllers/contactsController.js';
-import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validation.js';
 import {
   createContactSchema,
   updateContactSchema,
 } from '../validation/contacts.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
-const router = Router();
+const contactsRouter = Router();
 
-router.get('/contacts', ctrlWrapper(getContacts));
-router.get('/contacts/:contactId', ctrlWrapper(getContact));
-router.post(
-  '/contacts',
+contactsRouter.use(authenticate);
+
+contactsRouter.get('/', ctrlWrapper(getContacts));
+contactsRouter.get('/:contactId', ctrlWrapper(getContact));
+contactsRouter.post(
+  '/',
   validateBody(createContactSchema),
   ctrlWrapper(createContact),
 );
-router.patch(
-  '/contacts/:contactId',
+contactsRouter.patch(
+  '/:contactId',
   validateBody(updateContactSchema),
   ctrlWrapper(updateContact),
 );
-router.delete('/contacts/:contactId', ctrlWrapper(deleteContact));
+contactsRouter.delete('/:contactId', ctrlWrapper(deleteContact));
 
-export default router;
+export default contactsRouter;
