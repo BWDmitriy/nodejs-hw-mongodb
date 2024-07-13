@@ -4,8 +4,14 @@ import createHttpError from 'http-errors';
 import { SessionsCollection } from '../db/models/session.js';
 import { UsersCollection } from '../db/models/user.js';
 
+const skipAuthRoutes = ['/auth/refresh', '/auth/logout'];
+
 export const authenticate = async (req, res, next) => {
   try {
+    if (skipAuthRoutes.includes(req.path)) {
+      return next();
+    }
+
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
