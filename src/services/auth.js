@@ -9,7 +9,7 @@ import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
 import { SessionsCollection } from '../db/models/session.js';
 
 import jwt from 'jsonwebtoken';
-import { SMTP } from '../constants/index.js';
+// import { SMTP } from '../constants/index.js';
 import { env } from '../utils/env.js';
 import { sendEmail } from '../utils/sendMail.js';
 
@@ -144,10 +144,12 @@ export const requestResetToken = async (email) => {
     },
   );
 
+  const resetUrl = `${env('APP_DOMAIN')}/reset-password?token=${resetToken}`;
+
   await sendEmail({
-    from: env(SMTP.SMTP_FROM),
+    from: env('SMTP_FROM'),
     to: email,
     subject: 'Reset your password',
-    html: `<p>Click <a href="${resetToken}">here</a> to reset your password!</p>`,
+    html: `<p>Click <a href="${resetUrl}">here</a> to reset your password!</p>`,
   });
 };
