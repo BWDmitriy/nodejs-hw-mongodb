@@ -15,7 +15,6 @@ import {
   requestResetEmailController,
 } from '../controllers/auth.js';
 import { validateBody } from '../middlewares/validation.js';
-import { authenticate } from '../middlewares/authenticate.js';
 
 const authRouter = Router();
 
