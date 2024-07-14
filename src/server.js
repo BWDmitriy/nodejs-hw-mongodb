@@ -36,7 +36,7 @@ export const setupServer = () => {
   app.use(cookieParser());
   app.get('/', (req, res) => {
     res.json({
-      message: 'Hello world! This index page belongs to hw5-auth branch',
+      message: 'Hello world! This index page belongs to hw6-email-and-images branch',
     });
   });
 

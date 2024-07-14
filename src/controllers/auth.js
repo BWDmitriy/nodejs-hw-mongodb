@@ -117,11 +117,27 @@ export const requestResetEmailController = async (req, res, next) => {
   }
 };
 
-export const resetPasswordController = async (req, res) => {
-  await resetPassword(req.body);
-  res.json({
-    message: 'Password was successfully reset!',
-    status: 200,
-    data: {},
-  });
+export const resetPasswordController = async (req, res, next) => {
+  try {
+    const { token, password } = req.body;
+    await resetPassword(token, password);
+    res.status(200).json({
+      status: 200,
+      message: 'Password has been successfully reset.',
+      data: {},
+    });
+  } catch (error) {
+    if (error.status === 401) {
+      return next(createHttpError(401, 'Token is expired or invalid.'));
+    }
+    if (error.status === 404) {
+      return next(createHttpError(404, 'User not found!'));
+    }
+    return next(
+      createHttpError(
+        500,
+        'Failed to reset the password, please try again later.',
+      ),
+    );
+  }
 };
