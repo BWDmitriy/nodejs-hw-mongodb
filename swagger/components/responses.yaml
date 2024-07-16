@@ -1,4 +1,5 @@
-# swagger/components/responses.yaml
+# /swagger/components/responses.yaml
+
 responses:
   NotFound:
     description: Entity not found.
@@ -6,3 +7,5 @@ responses:
     description: Illegal input for operation.
   GeneralError:
     description: General Error
+  Unauthorized:
+    $ref: './401.yaml'

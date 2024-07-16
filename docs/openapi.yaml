@@ -10,7 +10,7 @@ info:
 tags:
   - name: contacts
     description: Operations related to contacts
-#servers:
+# servers:
 # - url: http://localhost:3000
 # - url: посилання на задеплоєний сайт
 paths:
@@ -26,8 +26,6 @@ paths:
     delete:
       $ref: '../swagger/paths/contacts/{id}/delete.yaml'
 components:
-  schemas:
-    $ref: '../swagger/components/schemas.yaml'
   responses:
     $ref: '../swagger/components/responses.yaml'
   securitySchemes:
