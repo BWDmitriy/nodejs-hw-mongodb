@@ -9,18 +9,18 @@ info:
     Contacts NodeJS
 tags:
   - name: contacts
-  description: Operations related to contacts
-servers:
-  - url: <http://localhost:3000>
-  - url: #посилання на задеплоєний сайт
+    description: Operations related to contacts
+#servers:
+#- url: http://localhost:3000
+#- url: посилання на задеплоєний сайт
 paths:
-  /contacts/{id}:
-    $ref: './swagger/paths/contacts/{id}/get.yaml'
+  /contacts/{contactId}:
+    $ref: '../swagger/paths/contacts/{id}/get.yaml'
 components:
   schemas:
-    $ref: './swagger/components/schemas.yaml'
-  responses: 
-    $ref: './swagger/components/responses.yaml'
+    $ref: '../swagger/components/schemas.yaml'
+  responses:
+    $ref: '../swagger/components/responses.yaml'
   securitySchemes:
     bearerAuth:
       type: http
