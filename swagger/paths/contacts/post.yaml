@@ -1,0 +1,25 @@
+# swagger/paths/contacts/post.yaml
+post:
+  tags:
+    - Contacts
+  summary: Create a new contact
+  operationId: createContact
+  description: Create a new contact.
+  security:
+    - bearerAuth: []
+  requestBody:
+    description: Contact data to create
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Contact'
+  responses:
+    201:
+      description: Contact created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Contact'
+    400:
+      $ref: '#/components/responses/IllegalInput'
