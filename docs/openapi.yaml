@@ -4,18 +4,27 @@ info:
   title: Contacts NodeJS
   license:
     name: Apache 2.0
-    url: <http://www.apache.org/licenses/LICENSE-2.0.html>
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: >
     Contacts NodeJS
 tags:
   - name: contacts
     description: Operations related to contacts
 #servers:
-#- url: http://localhost:3000
-#- url: посилання на задеплоєний сайт
+# - url: http://localhost:3000
+# - url: посилання на задеплоєний сайт
 paths:
+  /contacts:
+    $ref: '../swagger/paths/contacts/get.yaml'
+    post:
+      $ref: '../swagger/paths/contacts/post.yaml'
   /contacts/{contactId}:
-    $ref: '../swagger/paths/contacts/{id}/get.yaml'
+    get:
+      $ref: '../swagger/paths/contacts/{id}/get.yaml'
+    patch:
+      $ref: '../swagger/paths/contacts/{id}/patch.yaml'
+    delete:
+      $ref: '../swagger/paths/contacts/{id}/delete.yaml'
 components:
   schemas:
     $ref: '../swagger/components/schemas.yaml'
