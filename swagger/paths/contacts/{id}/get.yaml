@@ -1,0 +1,21 @@
+# swagger/paths/contacts/{id}/get.yaml
+get:
+  tags:
+    - contacts
+    summary: Get a contact by ID 
+    parameters:
+      - name: id
+      in: path
+      required: true
+      description: ID of the contact to fetch
+      schema:
+        type: string
+        responses: 
+          200:
+            description: Contact found
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Contact'
+              404:
+                $ref: '#/components/responses/NotFound'

@@ -8,13 +8,19 @@ info:
   description: >
     Contacts NodeJS
 tags:
-  # теги, що ви будете використовувати
+  - name: contacts
+  description: Operations related to contacts
 servers:
   - url: <http://localhost:3000>
   - url: #посилання на задеплоєний сайт
 paths:
-  # тут будуть посилання на ендпоінти
+  /contacts/{id}:
+    $ref: './swagger/paths/contacts/{id}/get.yaml'
 components:
+  schemas:
+    $ref: './swagger/components/schemas.yaml'
+  responses: 
+    $ref: './swagger/components/responses.yaml'
   securitySchemes:
     bearerAuth:
       type: http

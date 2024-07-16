@@ -1,0 +1,8 @@
+# swagger/components/responses.yaml
+responses:
+  NotFound:
+    description: Entity not found.
+  IllegalInput:
+    description: Illegal input for operation.
+  GeneralError:
+    description: General Error
