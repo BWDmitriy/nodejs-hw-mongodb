@@ -15,7 +15,7 @@ tags:
   - name: contacts
     description: Operations related to contacts
 servers:
-  - url: <http://localhost:3000>
+  - url: http://localhost:3000
 paths:
   /auth/register:
     $ref: '../swagger/paths/auth/register.yaml'
@@ -30,8 +30,8 @@ paths:
   /auth/reset-pwd:
     $ref: '../swagger/paths/auth/reset-pwd.yaml'
   /contacts:
-    $ref: '../swagger/paths/contacts/get.yaml'
-  /contacts:
+    get:
+      $ref: '../swagger/paths/contacts/get.yaml'
     post:
       $ref: '../swagger/paths/contacts/post.yaml'
   /contacts/{contactId}:

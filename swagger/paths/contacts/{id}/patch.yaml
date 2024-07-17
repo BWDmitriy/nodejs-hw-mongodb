@@ -42,8 +42,8 @@ responses:
     content:
       application/json:
         schema:
-          $ref: '../../components/schemas/contact.yaml'
+          $ref: '../../../components/schemas/contact.yaml'
   '404':
-    $ref: '../../components/responses/NotFound.yaml'
+    $ref: '../../../components/responses/NotFound.yaml'
   '401':
-    $ref: '../../components/responses/401.yaml'
+    $ref: '../../../components/responses/401.yaml'
