@@ -3,9 +3,25 @@
 responses:
   NotFound:
     description: Entity not found.
+    content:
+      application/json:
+        schema:
+          $ref: './schemas.yaml#/schemas/ErrorResponse'
   IllegalInput:
     description: Illegal input for operation.
+    content:
+      application/json:
+        schema:
+          $ref: './schemas.yaml#/schemas/ErrorResponse'
   GeneralError:
     description: General Error
+    content:
+      application/json:
+        schema:
+          $ref: './schemas.yaml#/schemas/ErrorResponse'
   Unauthorized:
-    $ref: './401.yaml'
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: './schemas.yaml#/schemas/ErrorResponse'

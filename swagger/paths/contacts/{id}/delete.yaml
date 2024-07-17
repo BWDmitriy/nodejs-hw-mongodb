@@ -18,6 +18,6 @@ responses:
   '204':
     description: Contact deleted
   '404':
-    $ref: '../../components/responses/NotFound.yaml'
+    $ref: '../../components/responses.yaml#/responses/NotFound'
   '401':
-    $ref: '../../components/responses/401.yaml'
+    $ref: '../../components/responses.yaml#/responses/Unauthorized'
