@@ -12,6 +12,10 @@ info:
 tags:
   - name: auth
     description: Operations related to authentication
+  - name: contacts
+    description: Operations related to contacts
+servers:
+  - url: <http://localhost:3000>
 paths:
   /auth/register:
     $ref: '../swagger/paths/auth/register.yaml'
@@ -25,6 +29,18 @@ paths:
     $ref: '../swagger/paths/auth/send-reset-email.yaml'
   /auth/reset-pwd:
     $ref: '../swagger/paths/auth/reset-pwd.yaml'
+  /contacts:
+    $ref: '../swagger/paths/contacts/get.yaml'
+  /contacts:
+    post:
+      $ref: '../swagger/paths/contacts/post.yaml'
+  /contacts/{contactId}:
+    get:
+      $ref: '../swagger/paths/contacts/{id}/get.yaml'
+    patch:
+      $ref: '../swagger/paths/contacts/{id}/patch.yaml'
+    delete:
+      $ref: '../swagger/paths/contacts/{id}/delete.yaml'
 components:
   responses:
     $ref: '../swagger/components/responses.yaml'
