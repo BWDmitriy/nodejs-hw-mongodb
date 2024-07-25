@@ -16,7 +16,7 @@ tags:
     description: Operations related to contacts
 servers:
   - url: http://localhost:3000
-paths:
+  - url: https://contacts-app-ndz9.onrender.com
   /auth/register:
     $ref: '../swagger/paths/auth/register.yaml'
   /auth/login:
