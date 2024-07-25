@@ -38,7 +38,7 @@ export const setupServer = () => {
   app.use(cookieParser());
   app.get('/', (req, res) => {
     res.json({
-      message: 'Hello world! This index page belongs to hw7-swagger',
+      message: 'Hello world! This index page belongs to main',
     });
   });
 
