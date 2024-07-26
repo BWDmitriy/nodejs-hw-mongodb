@@ -1,51 +1,389 @@
-# /swagger/openapi.yaml
-
 openapi: 3.1.0
 info:
-  version: 1.0.0
   title: Contacts NodeJS
+  version: 1.0.0
+  description: Contacts NodeJS API
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: >
-    Contacts NodeJS
+servers:
+  - url: http://localhost:3000
+  - url: https://contacts-app-ndz9.onrender.com
 tags:
   - name: auth
     description: Operations related to authentication
   - name: contacts
     description: Operations related to contacts
-servers:
-  - url: http://localhost:3000
-  - url: https://contacts-app-ndz9.onrender.com
+paths:
   /auth/register:
-    $ref: '../swagger/paths/auth/register.yaml'
-  /auth/login:
-    $ref: '../swagger/paths/auth/login.yaml'
-  /auth/logout:
-    $ref: '../swagger/paths/auth/logout.yaml'
-  /auth/refresh:
-    $ref: '../swagger/paths/auth/refresh.yaml'
-  /auth/send-reset-email:
-    $ref: '../swagger/paths/auth/send-reset-email.yaml'
-  /auth/reset-pwd:
-    $ref: '../swagger/paths/auth/reset-pwd.yaml'
-  /contacts:
-    get:
-      $ref: '../swagger/paths/contacts/get.yaml'
     post:
-      $ref: '../swagger/paths/contacts/post.yaml'
-  /contacts/{contactId}:
+      tags:
+        - auth
+      summary: Register a new user
+      operationId: registerUser
+      description: Register a new user with the provided details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUserRequest'
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          $ref: '#/components/responses/IllegalInput'
+        '409':
+          $ref: '#/components/responses/GeneralError'
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Login a user
+      operationId: loginUser
+      description: Login a user with the provided credentials
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUserRequest'
+      responses:
+        '200':
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          $ref: '#/components/responses/IllegalInput'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /auth/logout:
+    post:
+      tags:
+        - auth
+      summary: Logout a user
+      operationId: logoutUser
+      description: Logout the currently authenticated user
+      security:
+        - bearerAuth: []
+      responses:
+        '204':
+          description: User logged out successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /auth/refresh:
+    post:
+      tags:
+        - auth
+      summary: Refresh the authentication token
+      operationId: refreshToken
+      description: Refresh the authentication token using the refresh token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
+      responses:
+        '200':
+          description: Token refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          $ref: '#/components/responses/IllegalInput'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /auth/send-reset-email:
+    post:
+      tags:
+        - auth
+      summary: Send password reset email
+      operationId: sendResetEmail
+      description: Send a password reset email to the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendResetEmailRequest'
+      responses:
+        '200':
+          description: Password reset email sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          $ref: '#/components/responses/IllegalInput'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /auth/reset-pwd:
+    post:
+      tags:
+        - auth
+      summary: Reset password
+      operationId: resetPassword
+      description: Reset the user's password using the reset token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordRequest'
+      responses:
+        '200':
+          description: Password reset successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          $ref: '#/components/responses/IllegalInput'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /contacts:
+    post:
+      tags:
+        - contacts
+      summary: Create a new contact
+      operationId: createContact
+      description: Create a new contact with the provided details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger/components/schemas/contact.yaml'
+      responses:
+        '201':
+          description: Contact created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '../swagger/components/schemas/contact.yaml'
+        '400':
+          $ref: '#/components/responses/IllegalInput'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /contacts/{id}:
     get:
-      $ref: '../swagger/paths/contacts/{id}/get.yaml'
+      tags:
+        - contacts
+      summary: Get a contact by ID
+      operationId: getContactById
+      description: Retrieve a specific contact by its unique ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the contact to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Contact retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '../swagger/components/schemas/contact.yaml'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
     patch:
-      $ref: '../swagger/paths/contacts/{id}/patch.yaml'
+      tags:
+        - contacts
+      summary: Update a contact by ID
+      operationId: updateContactById
+      description: Update a specific contact by its unique ID.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the contact to update
+          schema:
+            type: string
+      requestBody:
+        description: Contact data to update
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                phoneNumber:
+                  type: string
+                email:
+                  type: string
+                isFavourite:
+                  type: boolean
+                contactType:
+                  type: string
+                  enum:
+                    - work
+                    - home
+                    - personal
+                photo:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Contact updated
+          content:
+            application/json:
+              schema:
+                $ref: '../swagger/components/schemas/contact.yaml'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
     delete:
-      $ref: '../swagger/paths/contacts/{id}/delete.yaml'
+      tags:
+        - contacts
+      summary: Delete a contact by ID
+      operationId: deleteContactById
+      description: Delete a specific contact by its unique ID.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the contact to delete
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Contact deleted successfully
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    $ref: '../swagger/components/responses.yaml'
   schemas:
-    $ref: '../swagger/components/schemas.yaml'
+    RegisterUserRequest:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          format: email
+          example: john.doe@example.com
+        password:
+          type: string
+          format: password
+          example: password123
+    LoginUserRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: john.doe@example.com
+        password:
+          type: string
+          format: password
+          example: password123
+    RefreshTokenRequest:
+      type: object
+      required:
+        - refreshToken
+      properties:
+        refreshToken:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    SendResetEmailRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+          example: john.doe@example.com
+    ResetPasswordRequest:
+      type: object
+      required:
+        - token
+        - password
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        password:
+          type: string
+          format: password
+          example: newpassword123
+    LoginResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: Success
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: Not Found
+  responses:
+    IllegalInput:
+      description: Illegal input for operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    GeneralError:
+      description: General Error
+      content:
+        application/json:
+          schema:
+            $ref: '../swagger/components/responses/401.yaml'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../swagger/components/responses/401.yaml'
+    NotFound:
+      description: Entity not found.
+      content:
+        application/json:
+          schema:
+            $ref: '../swagger/components/responses/401.yaml'
   securitySchemes:
     bearerAuth:
       type: http
